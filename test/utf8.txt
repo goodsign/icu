@@ -1,0 +1,5 @@
+Package template implements data-driven templates for generating textual output.
+
+To generate HTML output, see package html/template, which has the same interface as this package but automatically secures HTML output against certain attacks.
+
+Nous vous transmettrons les informations demandées dans les meilleurs délais. Ces recherches sont effectuées à titre gracieux.
