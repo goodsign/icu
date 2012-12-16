@@ -8,12 +8,29 @@ Installation
 
 Installation consists of several simple steps. They may be a bit different on your target system (e.g. require more permissions) so adapt them to the parameters of your system.
 
+### Install pkg-config
+
+Make sure you have **pkg-config** installed.
+
+Installation example using apt-get (Ubuntu):
+
+```
+sudo apt-get install pkg-config
+```
+
 ### Get icu4c C library code
 
-* Download original icu4c archive from [icu download section](http://site.icu-project.org/download). 
-* Unarchive it.
+Download and unarchive original icu4c archive from [icu download section](http://site.icu-project.org/download).
 
-NOTE: If this link is not working or there are some problems with downloading, there is a stable version 50.1 snapshot saved in [Downloads](https://github.com/downloads/goodsign/icu/icu4c-50_1-src.tgz).
+Example (for version 50.1):
+
+```
+wget http://download.icu-project.org/files/icu4c/50.1/icu4c-50_1-src.tgz
+tar -zxvf icu4c-50_1-src.tgz
+mv -i ./icu ~/where-you-store-libs
+```
+
+NOTE: If this link is not working or there are some problems with downloading, there is a stable version 50.1 snapshot saved in [Github Downloads](https://github.com/downloads/goodsign/icu/icu4c-50_1-src.tgz).
 
 ### Build and install icu4c C library
 
