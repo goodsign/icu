@@ -123,11 +123,11 @@ icu4c Licence
 
 ICU is released under a nonrestrictive open source license that is suitable for use with both commercial software and with other open source or free software.
 
-[LICENCE file](https://github.com/goodsign/libtextcat/blob/master/LICENCE_icu)
+[LICENCE file](https://github.com/goodsign/icu/blob/master/LICENCE_icu)
 
 Licence
 ==========
 
 The goodsign/icu binding is released under the [BSD Licence](http://opensource.org/licenses/bsd-license.php)
 
-[LICENCE file](https://github.com/goodsign/libtextcat/blob/master/LICENCE)
+[LICENCE file](https://github.com/goodsign/icu/blob/master/LICENCE)
