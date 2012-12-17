@@ -116,7 +116,7 @@ Usage notes
 More info
 ----------
 
-For more information on libtextcat refer to the original [website](http://site.icu-project.org/), which contains links on theory and other details.
+For more information on icu refer to the original [website](http://site.icu-project.org/), which contains links on theory and other details.
 
 icu4c Licence
 ==========
@@ -128,6 +128,6 @@ ICU is released under a nonrestrictive open source license that is suitable for 
 Licence
 ==========
 
-The goodsign/libtextcat binding is released under the [BSD Licence](http://opensource.org/licenses/bsd-license.php)
+The goodsign/icu binding is released under the [BSD Licence](http://opensource.org/licenses/bsd-license.php)
 
 [LICENCE file](https://github.com/goodsign/libtextcat/blob/master/LICENCE)
