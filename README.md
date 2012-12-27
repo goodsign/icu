@@ -41,6 +41,7 @@ cd source
 ./configure
 make
 sudo make install
+sudo ldconfig
 ```
 
 ### Install Go wrapper
