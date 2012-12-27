@@ -8,6 +8,16 @@ Installation
 
 Installation consists of several simple steps. They may be a bit different on your target system (e.g. require more permissions) so adapt them to the parameters of your system.
 
+### Install build-essential
+
+Make sure you have **build-essential** installed. Otherwise icu would fail on the configuration stage.
+
+Installation example using apt-get (Ubuntu):
+
+```
+sudo apt-get install build-essential
+```
+
 ### Install pkg-config
 
 Make sure you have **pkg-config** installed.
