@@ -28,6 +28,12 @@ Installation example using apt-get (Ubuntu):
 sudo apt-get install pkg-config
 ```
 
+Install using Homebrew (Mac OS X)
+
+```
+brew update && brew install pkg-config
+```
+
 ### Get icu4c C library code
 
 Download and unarchive original icu4c archive from [icu download section](http://site.icu-project.org/download).
@@ -52,6 +58,26 @@ cd source
 make
 sudo make install
 sudo ldconfig
+```
+
+### Install icu4c using package managers
+
+On Ubuntu:
+
+```
+sudo apt-get install libicu
+```
+
+On Mac OS X:
+
+```
+brew install icu4c
+```
+
+To enable `pkg-config` finding `icu4c` files on Mac OS X, we need:
+
+```
+export PKG_CONFIG_PATH=/usr/local/Cellar/icu4c/54.1/lib/pkgconfig:PKG_CONFIG_PATH
 ```
 
 ### Install Go wrapper
