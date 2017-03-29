@@ -14,7 +14,7 @@ const (
     DefaultMaxTextSize = 1024 * 1024    // Default value for the max text length in conversion operations
     utf8MaxCharSize = 4
     utf16MaxCharSize = 4
-) 
+)
 
 var (
     Utf8CString = C.CString("UTF-8")
@@ -35,7 +35,7 @@ type CharsetConverter struct {
 // are created in memory once and then used. 'maxTextSize' sets the size of these buffers.
 // ICU library would return error if any processed text is longer than this parameter.
 //
-// NOTE: 
+// NOTE:
 //
 // UTF8 uses 1 to 4 bytes for each symbol.
 // UTF16 uses 2 bytes to 4 bytes for each symbol.
@@ -79,7 +79,7 @@ func (conv *CharsetConverter) ConvertToUtf8(input []byte, srcEncoding string) ([
             C.int32_t(len(input)),
             (*C.int)(unsafe.Pointer(&status)))
 
-    if status == U_ZERO_ERROR {
+    if isSuccess(status) {
         nConvLen := C.convertFromUtf16(
             Utf8CString,
             (*C.char)(unsafe.Pointer(&conv.utf8Buffer[0])),
@@ -88,7 +88,7 @@ func (conv *CharsetConverter) ConvertToUtf8(input []byte, srcEncoding string) ([
             C.int32_t(convLen),
             (*C.int)(unsafe.Pointer(&status)))
 
-        if status == U_ZERO_ERROR {
+        if isSuccess(status) {
             resStr := conv.utf8Buffer[:nConvLen]
             return ([]byte)(resStr), nil
         }

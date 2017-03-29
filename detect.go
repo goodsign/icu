@@ -11,9 +11,21 @@ import (
 )
 
 const (
-    U_ZERO_ERROR        = 0     // ICU common constant error code which means that no error occured
-    MatchDataBufferSize = 25    // Size of the buffer for detection results (Max count of returned guesses per detect call)
-) 
+    U_ZERO_ERROR        = 0          // ICU common constant error code which means that no error occured
+    U_ERROR_LIMIT       = 0x7FFFFFFF // Dirty hack, negative error codes are are being turned into large positive ints
+    MatchDataBufferSize = 25         // Size of the buffer for detection results (Max count of returned guesses per detect call)
+)
+
+// Go implementation of the icu U_SUCCESS macro. Negative status codes are
+// warnings, 0 is a success without warnings, > 0 is an error
+func isSuccess(status int) bool {
+    return status <= U_ZERO_ERROR || status >= U_ERROR_LIMIT
+}
+
+// Go implementation of the icu U_FAILURE macro.
+func isFailure(status int) bool {
+    return status > U_ZERO_ERROR && status < U_ERROR_LIMIT
+}
 
 // CharsetDetector provides ICU charset detection functionality.
 type CharsetDetector struct {
@@ -39,7 +51,7 @@ func NewCharsetDetector() (*CharsetDetector, error) {
 
     det.ptr = C.ucsdet_open((*C.UErrorCode)(statusPtr))
 
-    if status != U_ZERO_ERROR {
+    if isFailure(status) {
         return nil, fmt.Errorf("ICU Error code returned: %d", status)
     }
 
@@ -63,14 +75,14 @@ func (det *CharsetDetector) GuessCharset(input []byte) (matches []Match, err err
     // Perform detection. Guess count is the number of matches returned.
     // The matches themself are put in the result buffer
     guessCount := C.detectCharset(
-        unsafe.Pointer(det.ptr), 
-        unsafe.Pointer(&input[0]), 
-        C.int(inputLen), 
-        (*C.int)(unsafe.Pointer(&status)), 
+        unsafe.Pointer(det.ptr),
+        unsafe.Pointer(&input[0]),
+        C.int(inputLen),
+        (*C.int)(unsafe.Pointer(&status)),
         (*C.MatchData)(unsafe.Pointer(&det.resBuffer[0])),
         C.int(MatchDataBufferSize))
 
-    if status == U_ZERO_ERROR {
+    if isSuccess(status) {
         // Convert the returned number of entries from result buffer to a slice
         // that will be returned
         count := int(guessCount)

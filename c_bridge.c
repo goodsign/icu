@@ -6,16 +6,16 @@
 #include <unicode/ucnv.h>
 
 // See description in c_bridge.h
-const int detectCharset(void        *detector, 
-                        void        *input, 
-                        int         input_len, 
-                        int         *status, 
-                        MatchData   *matchBuffer, 
+const int detectCharset(void        *detector,
+                        void        *input,
+                        int         input_len,
+                        int         *status,
+                        MatchData   *matchBuffer,
                         int         matchBufferSize) {
 
     // Put input bytes in the detector.
     ucsdet_setText((UCharsetDetector*)detector, (char*)input, input_len, status);
-    if (*status != U_ZERO_ERROR) {
+    if U_FAILURE(*status) {
         return 0;
     }
 
@@ -25,7 +25,7 @@ const int detectCharset(void        *detector,
 
     // Perform analysis and return all guesses and their count.
     bestGuesses = ucsdet_detectAll((UCharsetDetector*)detector, &matchCount, status);
-    if (*status != U_ZERO_ERROR) {
+    if U_FAILURE(*status) {
         return 0;
     }
 
@@ -42,19 +42,19 @@ const int detectCharset(void        *detector,
 
         // Fill guessed encoding
         bestGuessedCharset = ucsdet_getName(bestGuess, status);
-        if (*status != U_ZERO_ERROR) {
+        if U_FAILURE(*status) {
             return 0;
         }
 
         // Fill guessed language
         bestGuessedLanguage = ucsdet_getLanguage(bestGuess, status);
-        if (*status != U_ZERO_ERROR) {
+        if U_FAILURE(*status) {
             return 0;
         }
 
         // Fill its confidence rating
         int32_t conf = ucsdet_getConfidence(bestGuess, status);
-        if (*status != U_ZERO_ERROR) {
+        if U_FAILURE(*status) {
             return 0;
         }
 
@@ -69,7 +69,7 @@ const int detectCharset(void        *detector,
 
 // See description in c_bridge.h
 int convertToUtf16(const char   *srcEncoding,
-                   UChar        *dest, 
+                   UChar        *dest,
                    int32_t      destCapacity,
                    const char   *src,
                    int32_t      srcLength,
@@ -77,13 +77,13 @@ int convertToUtf16(const char   *srcEncoding,
     UConverter *conv;
 
     conv = ucnv_open(srcEncoding, status);
-    if (*status != U_ZERO_ERROR) {
+    if U_FAILURE(*status) {
         return 0;
     }
 
     /* Convert from original encoding to UTF-16 */
     int len = ucnv_toUChars(conv, dest, destCapacity, src, srcLength, status);
-    if (*status != U_ZERO_ERROR) {
+    if U_FAILURE(*status) {
         return 0;
     }
 
@@ -94,7 +94,7 @@ int convertToUtf16(const char   *srcEncoding,
 
 // See description in c_bridge.h
 int convertFromUtf16(const char   *destEncoding,
-                     char         *dest, 
+                     char         *dest,
                      int32_t      destCapacity,
                      const UChar  *src,
                      int32_t      srcLength,
@@ -102,13 +102,13 @@ int convertFromUtf16(const char   *destEncoding,
     UConverter *conv;
 
     conv = ucnv_open(destEncoding, status);
-    if (*status != U_ZERO_ERROR) {
+    if U_FAILURE(*status) {
         return 0;
     }
 
     /* Convert from UTF-16 to destination encoding */
     int len = ucnv_fromUChars(conv, dest, destCapacity, src, srcLength, status);
-    if (*status != U_ZERO_ERROR) {
+    if U_FAILURE(*status) {
         return 0;
     }
 
